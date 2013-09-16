@@ -33,6 +33,9 @@ echo $PWD
 cd $ROOT_PATH/libraries
 zip -r $TMP_PATH/packages/lib_Elastica.zip ./Elastica
 
+# Module ElasticSearch
+cd $ROOT_PATH/modules
+zip -r $TMP_PATH/packages/mod_elasticsearch.zip ./mod_elasticsearch
 
 ################### CONTENT TYPE ################
 

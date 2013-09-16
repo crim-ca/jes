@@ -20,5 +20,6 @@
     <file type="plugin" id="weblinks" group="elasticsearch">plg_elasticsearch_weblinks.zip</file>
     <file type="plugin" id="elasticaLib" group="system">plg_system_elasticaLib.zip</file>
     <file type="library" id="Elastica" >lib_Elastica.zip</file>
+	<file type="module" id="mod_elasticsearch" client="site">mod_elasticsearch.zip</file>
   </files>
 </extension>
