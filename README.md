@@ -27,7 +27,7 @@ ElasticSearch - Article
 ElasticSearch - Contact   
 ElasticSearch - Weblinks   
 
-## Setup envirnoement to develop
+## Setup environment to develop
 
 To develop this extension we advise to create symbolic links to component and plugins.
 Some plugins are not likely to change, so creating symbolic links for them is useless.
