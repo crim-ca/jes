@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="install">
+    <name>System - ElasticaLib</name>
+    <author>Jean-Baptiste Cayrou and Adrien Gareau</author>
+    <creationDate>July 2013</creationDate>
+    <copyright>Copyright 2013 CRIM - Computer Research Institute of Montreal</copyright>
+    <license>Apache 2.0 ; See LICENSE.txt</license>
+    <authorEmail></authorEmail>
+    <version>1.0.0</version>
+    <description>Register Elastica Library</description>
+    <files>
+        <filename plugin="elasticaLib">elasticaLib.php</filename>
+    </files>
+</extension>

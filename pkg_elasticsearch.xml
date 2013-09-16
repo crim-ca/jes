@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="1.6">
+  <name>ElasticSearch Package</name>
+  <packagename>elasticsearch</packagename>
+  <creationDate>2013-08-22</creationDate>
+  <author>Adrien Gareau and Jean Baptiste Cayrou</author>
+  <authorEmail></authorEmail>
+  <authorUrl>http://crim.ca/</authorUrl>
+  <version>1.0</version>
+  <url></url>
+  <packager></packager>
+  <packagerurl></packagerurl>
+  <update></update>
+  <description>ElasticSearch extension for Joomla</description>
+  <files folder="packages">
+    <file type="component" id="com_elasticsearch">com_elasticsearch.zip</file>
+    <file type="plugin" id="elastic" group="content">plg_content_elastic.zip</file>
+    <file type="plugin" id="article" group="elasticsearch">plg_elasticsearch_article.zip</file>
+    <file type="plugin" id="contact" group="elasticsearch">plg_elasticsearch_contact.zip</file>
+    <file type="plugin" id="weblinks" group="elasticsearch">plg_elasticsearch_weblinks.zip</file>
+    <file type="plugin" id="elasticaLib" group="system">plg_system_elasticaLib.zip</file>
+    <file type="library" id="Elastica" >lib_Elastica.zip</file>
+  </files>
+</extension>

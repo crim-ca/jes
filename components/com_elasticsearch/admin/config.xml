@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+        <fieldset
+                name="component"
+                label="Configuration"
+                description=""
+		>
+                <field
+                        name="host"
+                        type="string"
+                        label="COM_ELASTICSEARCH_CONF_SERVER_NAME"
+                        description="COM_ELASTICSEARCH_CONF_SERVER_NAME_DESC"
+                        default="127.0.0.1"
+                >
+                </field>
+
+                <field
+                        name="port"
+                        type="int"
+                        label="COM_ELASTICSEARCH_CONF_PORT"
+                        description="COM_ELASTICSEARCH_CONF_PORT_DESC"
+                        default="9200"
+                >
+                </field>
+              <field
+                        name="index"
+                        type="string"
+                        label="COM_ELASTICSEARCH_CONF_INDEX"
+                        description="COM_ELASTICSEARCH_CONF_INDEX_DESC"
+                        default="joomla"
+                >
+                </field>
+
+        		<field
+            			name="highlightEnable"
+            			type="radio"
+            			default="1"
+            			label="COM_ELASTICSEARCH_CONF_HIGHLIGHT"
+            			description="COM_ELASTICSEARCH_CONF_HIGHLIGHT_DESC">
+            			<option value="1">JYES</option>
+            			<option value="0">JNO</option>
+                >
+        		</field>
+              <field
+                        name="highlightPre"
+                        type="string"
+                        label="COM_ELASTICSEARCH_CONF_HIGHLIGHT_PRE"
+                        description="Tag before a word COM_ELASTICSEARCH_CONF_HIGHLIGHT_PRE_DESC"
+                        default="&lt;span class=&quot;highlight&quot;&gt;"
+			            filter="raw"
+                >
+                </field>
+                 <field
+                        name="highlightPost"
+                        type="string"
+                        label="COM_ELASTICSEARCH_CONF_HIGHLIGHT_POST"
+                        description="COM_ELASTICSEARCH_CONF_HIGHLIGHT_POST_DESC"
+                        default="&lt;/span&gt;"
+			            filter="raw"
+                >
+                </field>
+        </fieldset>
+</config>

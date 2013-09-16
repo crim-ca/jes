@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="elasticsearch">
+	<name>ElasticSearch - Article</name>
+	<author>Jean-Baptiste Cayrou and Adrien Gareau</author>
+	<creationDate>July 2013</creationDate>
+	<copyright>Copyright 2013 CRIM - Computer Research Institute of Montreal</copyright>
+	<license>Apache 2.0 ; See LICENSE.txt</license>
+	<authorEmail></authorEmail>
+	<authorUrl></authorUrl>
+	<version>1.0</version>
+	<description>ElasticSearch plugin for article content</description>
+	<files>
+		<file plugin="article">article.php</file>
+		<filename>index.html</filename>
+		<folder>views</folder>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="boost" type="float"
+					description="Boost for this type"
+					label="Boost"
+					default="1.0"
+					size="5"
+				/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
