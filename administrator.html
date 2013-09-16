@@ -6,8 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="JES : An ElasticSearch extension for Joomla" />
 
+
+
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
+
+      <!-- Include required JS files -->
+      <script type="text/javascript" src="javascripts/shCore.js"></script>
+       
+      <!--
+          At least one brush, here we choose JS. You need to include a brush for every
+          language you want to highlight
+      -->
+      <script type="text/javascript" src="javascripts/shBrushPhp.js"></script>
+
+    <!-- Include *at least* the core style and default theme -->
+    <link href="stylesheets/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/shThemeDefault.css" rel="stylesheet" type="text/css" />
+    
     <title>JES</title>
   </head>
 
@@ -20,11 +36,6 @@
 
           <h1 id="project_title">JES</h1>
           <h2 id="project_tagline">An ElasticSearch extension for Joomla</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/crim-ca/jes/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/crim-ca/jes/tarball/master">Download this project as a tar.gz file</a>
-            </section>
         </header>
     </div>
 
@@ -33,7 +44,18 @@
       <section id="main_content" class="inner">
         <h1>
           <a name="jes---extension-elasticsearch-for-joomla" class="anchor" href="#jes---extension-elasticsearch-for-joomla"><span class="octicon octicon-link"></span></a>JES - Extension ElasticSearch for Joomla!</h1>
-        <h2><span class="octicon octicon-link"></span>Administrator Guide</h2>
+        <pre class="brush: php">
+          &lt;?php
+          echo $test;
+
+          ?&gt
+
+  
+        </pre>
+        <script type="text/javascript">
+             SyntaxHighlighter.all()
+        </script>
+        <h2>Administrator Guide</h2>
 
         <h3>Introduction</h3>
         <p>
@@ -57,7 +79,80 @@
         </p>
         <h3>Installation</h3>
         <h4>Enable extensions</h4>
-      
+        <p>
+        Our engine is made of one component and one plugin for each type of content (article, contact). It also has a plugin to communicate with Joomla! events and one library to use some special methods.  A package has been created so you just have to install the .zip package and it will install component and plugins. 
+        But unfortunately some plugins are disabled by default. You will have to enable them. Here is a list of those plugins:</p>
+        <ul>
+          <li>Each plugins which deal with content ( you can sort them by folder and choose elasticsearch)</li>
+          <li>Plugin which communicates with Joomla! (it is in the content folder)</li>
+          <li>The system plugin ElasticaLib (in system folder)</li>
+        </ul>
+        <p>You should also check that the component is correctly enabled.</p>
+        <img src="images/administrator/enableComponent1.png" />
+        <img src="images/administrator/enableComponent2.png" />
+        <img src="images/administrator/enableComponent3.png" />
+        <h4>Search bar</h4>
+        <p>
+        A new module has been created to use our component. It is installed at the same time of others plugins. You just have to enable it and disable previous search module. If you have defined your own template you will have to create your file for the module.</p>
+        <h3>Administrator panel</h3>
+        <p>
+        One you have installed and configured all plugins and component you should see ElasticSearch in your components list. If you go to the administration page you should see that: </p>
+        <img src="images/administrator/adminPanel.png" />
+        <p>
+        That page is helpful to know if you have a correct connection with ElasticSearch, the name of your node and your index. It also shows which type of content you have indexed and how many documents you have for each and the language. </p>
+        <p>There are also three buttons which are really useful: </p>
+        <ul>
+          <li><strong>Options:</strong><br />
+              <img src="images/administrator/configAdminPanel.png" style='width: 50%; ' />
+              <p> ElasticSearch server address, the port and the name of your index. Highlighting could be enabled here and you can specify a particular html tags here.
+              </p>  
+          </li>
+          <li><strong>Index:</strong>
+            <p>
+            It is really helpful if you already have documents when you have installed our extension. When clicking on that button it will index all documents for each plugins.
+            </p>
+          </li>
+
+          <li><strong>Purge:</strong>
+            <p>Clicking on that button will flush you index. It is necessary if you make some modification on the code. You will need to index all your contents again.
+            </p>
+          </li> 
+        </ul>
+        <h3>Plugin Administration</h3>
+        <p>
+          There is also an administration panel for plugins. There is one panel for each plugin (Available at the Plugin Manager page). For each plugin boosting can be changed. The boost is really useful to put forward particular contents. For example boosting a particular content helps to put them into top of results’ list. But the number you enter is an exponent so it must not be higher than 5 (higher would cause some issues with other contents on result list). 
+          When you chance boost value you need to re-index your site (Purge and Index in elasticsearch admin component).
+        </p>
+          <img src="images/administrator/PluginBoost.png" />
+        <h3>Search Terms Analysis</h3>
+        <p>
+        There is an analyzer that stores every search words which are typed. It shows how many times a word or sentence has been written and how many results were returned.   It can be enable at the search page administration component (administrator/index.php?option=com_search) in settings.  But the column result is useless because it uses the default search engine and not the custom one with ElasticSearch. 
+        </p>
+        <h3>Template Overriding</h3>
+        <p>
+        For each plugins which deal with contents you can override the way results are displayed. If you already have your own template you have to create a folder for each of your plugin (in html folder).  If you kept the basic template you just have to create folder in /templates/atomic/html. 
+        There will be one folder for each plugin and you have to keep the same name as the one in your plugin folder: plg_[nameofyourcontent].  
+       </p>
+       <h3>Limits</h3> 
+       <p>There are some limits due do ElasticSearch. For example if a user makes a blank search boosting will not be taken into account. It is a known bug in ElasticSearch and the community is trying to find a solution. 
+        Besides, words which are highlighted are the first to appear. In fact, there is no way to get scoring for words which are highlighted so it is the first occurrence of the word that will be highlighted. 
+        One of the problems is when users make an exact search using stop words in it. The request will return none results due to ElasticSearch analyzer.
+      </p>  
+      <h3>Problems and Resolves</h3>
+      <p>
+      There are some problems you may have to deal with. For example when you make a search and you have that error: </p>
+      <img src="images/administrator/ProblemConnectionES1.png" />
+      <p>Or if you have that error in your administration panel: </p>
+      <img src="images/administrator/ProblemConnectionES2.png" />
+      <p>
+      You should check your connection with ElasticSearch. It means that it cannot connect to ElasticSearch server. 
+
+      Another thing is if you change language of multiple articles in a row. You will have to purge and index before making a new search. Indeed there is no events which are fired when language is change for multiple articles. 
+
+      If there is an article which doesn’t appear in search result you should check that it is published. Indeed articles are indexed only if they have status published. 
+    </p>
+
+
       </section>
     </div>
 
@@ -69,7 +164,7 @@
       </footer>
     </div>
 
-    
+  <script type="text/javascript" src="javascripts/prettify/prettify.js"></script>
 
   </body>
 </html>
