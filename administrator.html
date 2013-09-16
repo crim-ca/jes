@@ -5,7 +5,8 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="JES : An ElasticSearch extension for Joomla" />
-
+    <meta name="Keywords" content="ElasticSearch, Joomla, extension, CRIM, centre de recherche de Montreal" />
+    <meta name="Author" content="CRIM, Jean-Baptiste Cayrou, Adrien Gareau" />
 
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
@@ -23,7 +24,7 @@
     <!-- Include *at least* the core style and default theme -->
     <link href="stylesheets/shCore.css" rel="stylesheet" type="text/css" />
     <link href="stylesheets/shThemeDefault.css" rel="stylesheet" type="text/css" />
-    
+
     <title>JES</title>
   </head>
 
@@ -44,39 +45,7 @@
       <section id="main_content" class="inner">
         <h1>
           <a name="jes---extension-elasticsearch-for-joomla" class="anchor" href="#jes---extension-elasticsearch-for-joomla"><span class="octicon octicon-link"></span></a>JES - Extension ElasticSearch for Joomla!</h1>
-        <pre class="brush: php">
-          &lt;?php
-          echo $test;
 
-          ?&gt
-
-  
-        </pre>
-        <script type="text/javascript">
-             SyntaxHighlighter.all()
-        </script>
-        <h2>Administrator Guide</h2>
-
-        <h3>Introduction</h3>
-        <p>
-        You absolutely need to have an ElasticSearch server if you want to use this extension. If you need further information about ElasticSearch you can go on their website:</p>
-        <a href="http://www.elasticsearch.org/">http://www.elasticsearch.org/</a>
-        <p>
-        This extension for Joomla! is a powerful search engine which uses ElasticSearch as indexer.
-        </p>
-        <p>
-          Here some features it provides:
-          <ul>
-            <li>Results are ordering by pertinence. </li>
-            <li>Boost on some fields. If a search word is in title it is more pertinent than if it is just in the content.</li>
-            <li>Smart search. Our engine does not search the exact words which have been typed. The search is made by prefix so if you write part of a word it could return the whole word. </li>
-            <li>Internationalization. Search results are in the same langue that current user.</li>
-            <li>Stopword. Common words (the, it, is etc.) are eliminated from the search query.</li>
-            <li>Search words are highlighted in the results. The way highlighting is made can be modified. Indeed you can choose to bold results are use a special html tags.</li> 
-            <li>Each type of content has its own display. Different elements can be display depends on type of the result.</li>
-            <li>PDF file can be easily index. You can attach a file to content and make search in that content.</li>
-           </ul>
-        </p>
         <h3>Installation</h3>
         <h4>Enable extensions</h4>
         <p>
@@ -163,8 +132,6 @@
         <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-
-  <script type="text/javascript" src="javascripts/prettify/prettify.js"></script>
 
   </body>
 </html>
