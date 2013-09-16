@@ -7,9 +7,26 @@
     <meta name="description" content="JES : An ElasticSearch extension for Joomla" />
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+	
     <title>JES</title>
+    
+	 <!-- Include required JS files -->
+      <script type="text/javascript" src="javascripts/shCore.js"></script>
+       
+      <!--
+          At least one brush, here we choose JS. You need to include a brush for every
+          language you want to highlight
+      -->
+      <script type="text/javascript" src="javascripts/shBrushPhp.js"></script>
+	  <script type="text/javascript" src="javascripts/shBrushXml.js"></script>
+    <!-- Include *at least* the core style and default theme -->
+    <link href="stylesheets/shCore.css" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/shThemeDefault.css" rel="stylesheet" type="text/css" />
+    
   </head>
+
+
+
 
   <body>
 
@@ -21,10 +38,6 @@
           <h1 id="project_title">JES</h1>
           <h2 id="project_tagline">An ElasticSearch extension for Joomla</h2>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/crim-ca/jes/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/crim-ca/jes/tarball/master">Download this project as a tar.gz file</a>
-            </section>
         </header>
     </div>
 
@@ -36,8 +49,425 @@
         <h2><span class="octicon octicon-link"></span>Developer Guide</h2>
 
       
-      </section>
+      <h3>Overview</h3>
+		<p>
+        This ElasticSearch extension works with Joomla 2.5 and ElasticSearch 0.90.2.
+		It is based on the structure of com_search and com_finder. It is easy to add a type of content thank to plugins. ElasticSearch component automatically detects them.
+		To interact with ElasticSearch, this extension use Elastica, a PHP client.
+        <p>
+           Installation package contains several plugins and a component:
+          <ul>
+            <li> <strong>com_elasticsearch:</strong> This core component makes query to ElasticSearch and show results. </li>
+            <li> <strong>plg_content_elastic:</strong> This plugin transfers events like OnContent* to onElasticSearch* </li>
+            <li> <strong>plg_system_elasticaLib:</strong> To integrate Elastica library, autoload method to use Elastic in all pages. </li>
+            <li> <strong>plg_elasticsearch_article:</strong> Indexes articles, basic contents of Joomla </li>
+            <li> <strong>plg_elasticsearch_contact:</strong> Indexes contact, basic contents of Joomla </li>
+           </ul>
+        </p>
+        <h3>How it works</h3>
+			<h4>Indexation</h4>
+				<p>
+				When content in Joomla is added, modified or deleted events are triggered. Main events are: 
+				onContentAfterSave, onContentAfterDelete. In example bellow, a user saves an article.
+				</p>
+				<img src="./images/developper/Explain1.PNG"></img> 
+				<p>
+				We can notice in the step 2 that events starting by “onContent” are sent to plg_content_elastic plugin which re-sends them to the elasticsearch plugin group. 
+				In this way, onContent* become onElasticSearch*.
+				</p>
+				<img src="./images/developper/Explain2.PNG"></img> 
+				<p>
+				Each ElasticSearch plugin (like article and contact) have method called onElasticSearchAfterSave and onElasticSearchAfterDelete. When there is a modification on content, all ElasticSearch’s plugins will execute that method. It is important to check that content match with plugin with $context variable. For example articles context is “com_content.article”.
+				In example bellow, all plugins of the group execute onElasticSearchAfterSave but just article plugin has a type which matches with context.
+				</p>
+				<img src="./images/developper/Explain3.PNG"></img> 
+				<p>
+				In the last step, article plugin send content to index to ElasticSearch thank to Elastic library.
+				</p>
+				<img src="./images/developper/Explain4.PNG"></img> 
+				<h4>Search</h4>
+				<p>
+				When a user makes a search, the com_elasticsearch component create a query to ElasticSearch using Elastica. 
+				</p>
+				<img src="./images/developper/Search1.PNG"></img> 
+				<p>To show results, the component takes results from Elastic and sends them to the relevant plugin. The way results are displayed depends on the type of content. Html code is created in plugins.   
+				</p>
+				<img src="./images/developper/Search2.PNG"></img>
+				<h4>Internationalization</h4> 
+				<p>
+				Elasticsearch component supports multiple-languages. When a user makes a search, stopwords of current language of site are removed (words like “a”, “the”, “this”). Results which have the same or an undefined language are returned.  It is possible thanks to Elasticsearch Analyzer. In fact the language is associated to an elasticsearch type.
+				</p>
+				<p>
+				For example, articles have three different in elasticsearch index:
+				<ul>
+				<li>article (For content where language is not specified)</li>
+				<li>article_fr</li>
+				<li>article_en</li>	
+				</ul>
+				</p>		
+		<h3>Create a plugin</h3>
+			<h4>Structure</h4>
+				<p>Plugins for ElasticSearch component must respect a particular structure of files</p>
+				<table>
+					<tr>
+						<td>./myplugin.php</td>
+						<td>Contains all the PHP code.</td>
+					</tr>			
+					<tr>
+						<td>./myplugin.xml</td>
+						<td>XML description</td>
+					</tr>			
+					<tr>
+						<td>./view/plg_myplugin/tmpl/default.php</td>
+						<td>View of a result.  Name of repertory is important and must be like “plg_[mypluginname]”</td>
+					</tr>
+				</table>
+				<p>
+				All the plugin have the same global behavior. Indeed, they all extend “ElasticSearchIndexerAdapter” class (and not JPlugin). This adapter is an abstract class that deals with the initialization of the different analyzer and index. So when you create your plugin you have to extend it from that particular class. That abstract class is defined in the file administrator/component/com_elasticsearch/helpers/adapter.php so do not forget to include that file before extending the class (use require_once to include the file). 
+				</p>
+				 <pre class="brush: php">
+					
+					// no direct access
+					defined('_JEXEC') or die;
+
+					jimport( 'joomla.application.component.view' );
+
+					require_once JPATH_SITE.'/components/com_content/router.php';
+					require_once JPATH_SITE.'/components/com_content/helpers/route.php';
+
+					// Load the base adapter.
+					require_once JPATH_ADMINISTRATOR . '/components/com_elasticsearch/helpers/adapter.php';
+
+					/**
+					 * ElasticSearch adapter for com_content.
+					 *
+					 */
+					class plgElasticsearchArticle extends ElasticSearchIndexerAdapter
+					{
+				</pre>
+				<p>
+				After creating the class, first thing to do is to indicate which type of content your plugin will deal with. You can do it with the variable <strong>“$type”</strong>. This variable is important for naming the type in Elasticsearch index. Another variable <strong>“$type_display”</strong> is used to display its name in administrator panel or for searching in the “search only” box.
+				</p>
+				<img src="./images/developper/SearchBar.png"></img> 
+				<pre class="brush: php">
+					/**
+					 * The type Elastic Search of content which will be indexed
+					 *
+					 * @var    string
+					 */
+					protected $type = 'article';
+
+
+					/**
+					 * The type ElasticSearch to display
+					 *
+					 * @var    string
+					 */
+					protected $type_display = 'Article';
+				</pre>
+				<p> 
+				<strong>Note</strong>: For <strong>$type_display</strong> it is possible to use Joomla JText for internationalization. 
+				</p>
+			<h4>Configure mapping</h4>
+				<p>
+				The second configuration step is to implement is the construct function. It is an essential function because it defines the mapping of your type in Elasticsearch. In mapping you will choose the core ES type (string, integer etc.) for each of your fields. You can choose if the field will be index or if you want to boost a particular field. 
+				</p>
+				<pre class="brush: php">
+				    public function __construct(&$subject, $config)
+					{
+						parent::__construct($subject, $config);
+
+						// Set boost
+						$this->boost=$this->params->get('boost');
+						
+						// Doc here : http://www.elasticsearch.org/guide/reference/mapping/core-types/
+						$mapping=   array(
+							'id'                     => array('type' => 'integer',
+															  'include_in_all' => FALSE,
+															  'index' => 'not_analyzed'),
+							'title'                  => array('type' => 'string',
+															  'include_in_all' => TRUE,
+															  'boost'=> 1.5),
+							'introtext'              => array('type' => 'string', 'include_in_all' => TRUE),
+							'fulltext'               => array('type' => 'string', 'include_in_all' => TRUE),
+							'created_by_alias'       => array('type' => 'string', 'include_in_all' => TRUE),
+							'categories'             => array('type' => 'string', 'include_in_all' => TRUE),
+							'language'               => array('type' => 'string', 
+															  'include_in_all' => FALSE,
+															  'index' => 'not_analyzed'),
+							'href'                   => array('type' => 'string', 'include_in_all' => FALSE),
+							'created_at'             => array('type' => 'date', 'include_in_all' => FALSE),
+							'feature'                => array('type' => 'integer', 'include_in_all' => FALSE),
+							'boost'                  => array('type' => 'float', 'include_in_all' => FALSE),
+							);
+						
+						$this->setMapping($mapping);    
+					}
+				</pre>
+				<p>
+				<strong>Include_in_all</strong> property is important for searching. When the component makes a query it does not specified in which fields it wants search and ElasticSearch will search automatically in all fields where include_in_all is TRUE. If property is not set, it is TRUE by default.
+				</p>
+				<p>
+				<strong>Boost</strong> property is useful to give more importance. If a word is found in a title it is more important than if it is just in text.
+				</p>
+				<p>
+				If you need to <strong>have several languages</strong> do not forget the field language as above
+				</p>
+				<p>
+				When mapping is ready, call the method 
+					<pre class="brush: php">
+						setMapping : $this->setMapping($mapping); 
+					</pre>
+				at the end of __construct method.
+				</p>
+				<p>
+				For more information about mapping please consult  <a href="http://www.elasticsearch.org/guide/reference/mapping/core-types/">http://www.elasticsearch.org/guide/reference/mapping/core-types/</a> 
+				</p>
+				<p>
+				We can notice that boost is set just after the call to parent:__construct  
+				</p>
+				<pre class="brush: php">
+				    // Set boost
+					$this->boost=$this->params->get('boost');
+				</pre>
+				<p>
+				This line gets the boost parameter which is set in the article.xml file.
+				</p>
+				<pre class="brush: xml">
+					&lt;config&gt;
+						&lt;fields name=&quot;params&quot;&gt;
+							&lt;fieldset name=&quot;basic&quot;&gt;
+								&lt;field name=&quot;boost&quot; type=&quot;float&quot;
+									description=&quot;Boost for this type&quot;
+									label=&quot;Boost&quot;
+									default=&quot;1.0&quot;
+									size=&quot;5&quot;
+								/&gt;
+							&lt;/fieldset&gt;
+						&lt;/fields&gt;
+					&lt;/config&gt;
+			</pre>
+			<p>
+			Boost is configurable in administrator plugin panel.
+			</p>
+			<h5>Exclude fields</h5>
+				<p>
+				If you just need to index a field  for search without store it (useful for PDF document for instance), use setExcludeField method with an array of field you do not want to save.
+				</p>
+				<pre class="brush: php"> 
+					// Exclude field file
+					$exclude = array('file');
+					$this->setSourceExclude($exclude);
+				</pre>
+		<h4>How to index</h4>
+			<p>
+			Each time content is created, modified or deleted, events are sent to plugins. Basically, events triggered are named onContectAfterSave and onContentAfterDelete. These events are relayed to the elasticsearch plugin group and called onElasticSearchAfterSave and onElasticSearchAfterDelete (A third event exist, onElasticSearchChangeState when a content change of state). You have to define those methods for your plugin. At the beginning of onElasticSearch* methods, you need to check the context variable. Indeed, events are broadcasted to all plugin, but you have to index only if type corresponds to your plugin.
+			</p>
+			<h5>Add a content</h5>
+				<pre class="brush: php">
+			    public function onElasticSearchAfterSave($context, $row, $isNew)
+				{
+
+					// Skip plugin if we are saving something other than article
+					if ($context != 'com_content.article') {
+							return true;
+					}
+
+					//Delete the document in elasticsearch (if language is changed)
+					$this->delete($id = $row->id);
+					
+					if($row->state == 1){ // If this article is published
+						$document = $this->rowToDocument($row);
+						$this->addDocument($document);
+					}
+				}
+				</pre>
+				<p>
+				Because of languages, delete method is called before indexing. If an article is first indexed in English and next language is changed to French, we need to delete the English one because it is stored in two different ElasticSearch type (See internationalization part for more details).
+				</p>
+				<p>
+				<strong>rowToDocument</strong> converts row variable in Elastica\Document objet.
+				<strong>addDocument</strong> index the document into elasticsearch
+				</p>
+				<p>
+				Now see how <strong>rowtoDocument</strong> works:
+				</p>
+				<pre class="brush: php">
+				private function rowToDocument($row){
+					$id = $row->id;
+
+					//Create a date object
+					$date = new DateTime($row->created);
+					
+					//Get the names of the categories
+					$category = JCategories::getInstance('Content')->get($row->catid);
+					$categories = array();
+					while($category&&$category->id > 1){
+						$categories[] = $category->title;
+						$category = $category->getParent();
+					}
+					
+					// Create a document
+					$entity = array(
+						'title'             => html_entity_decode(strip_tags($row->title)), 
+						'introtext'         => html_entity_decode(strip_tags($row->introtext)),
+						'fulltext'          => html_entity_decode(strip_tags($row->fulltext)),
+						'created_by_alias'  => $row->created_by_alias,
+						'metadata'          => $row->metadata,
+						'language'          => $row->language,
+						'categories'        => implode(';',$categories),
+						'created_at'        => $date->format('Y-m-d\Th:i:s'),
+						'href'              => ContentHelperRoute::getArticleRoute($row->id),
+						'feature'           => $row->featured
+					);
+
+					$document = new \Elastica\Document($id,$entity);
+
+					return $document;
+
+				}
+				</pre>
+				<p>
+				The most important part is the <strong>$entity</strong> variable, it just an associative array. Keys of this array must correspond with fields of mapping. Method returns an Elastica\Document that is just created with id and array.
+				</p>
+				<p>
+				<strong>Note</strong>: Boost field could be used to give more importance to a specific document by setting a value upper than 1.
+				If you want use Date type in your mapping you can use DateTime and format method as above.
+				</p>
+			<h5>Add all contents</h5>
+				<p>
+				If someone installs your plugin on his web site, he probably has already contents. He has to re-index his site to take into account that type of content. So your plugin has to provide an “onElasticSearchIndexAll” method.
+				</p>
+				<pre class="brush: php">
+					public function onElasticSearchIndexAll($types){
+        
+						//Get all articles
+						$db = JFactory::getDBO();
+						
+						$query = $db->getQuery(true);
+						$query->select('*');
+						$query->from('#__content');
+						$db->setQuery((string)$query);
+						$articles = $db->loadObjectList();
+
+						foreach($articles as $article){
+								if($article->state == 1){ // If this article is published
+									$document = $this->rowToDocument($article);
+									$this->pushDocument($document); 
+								}
+						}
+
+						$this->flushDocuments();
+
+						return $this->type_display;
+							
+					}
+				</pre>
+				<p>
+				Here the code do not use <strong>addDocument()</strong> because this function add just one document. Here we want to send all of them. To do that we have two functions:
+				</p>
+				<p>
+				Add a document in a list but do not send it to elasticsearch:
+				</p>
+				<pre class="brush: php">
+				$this->pushDocument($document) 	
+				</pre>
+				<p>
+				Send to elasticsearch all waiting documents:
+				</p>
+				<pre class="brush: php">
+				$this->pushDocument($document) 	
+				</pre>
+		<h4>Delete a content</h4>
+			<pre class="brush: php">
+			public function onElasticSearchAfterDelete($context, $data)
+			{
+				// Skip plugin if we are deleting something other than article
+				if ($context != 'com_content.article') {
+						return false;
+				}
+				$this->delete($data->id);
+				
+				return true;
+			}
+			</pre>
+		<h4>Index a file</h4>
+			<p>
+			It is possible to index a file linked to a Joomla content. The <strong>attachment</strong> plugin of ElasticSearch <strong>must be installed</strong>. <a href="http://www.elasticsearch.org/guide/reference/modules/plugins/">http://www.elasticsearch.org/guide/reference/modules/plugins/</a>
+			</p>
+			<p>
+			First define in the mapping a field of type attachment (in constructor)
+			</p>
+			<pre class="brush: php">
+				'file' => array('type' => 'attachment'),
+			</pre>
+			<p>
+			You also need to exclude this field to not store it and just index the words.
+			</p>
+			<pre class="brush: php">
+				// Exclude field file
+				$exclude = array('file');
+				$this->setSourceExclude($exclude);
+			</pre>
+			<p>
+			Next, when you create an Elastica\Document (  in rowToDocument() ) just use :
+			</p>
+			<pre class="brush: php">
+				$document->addFileContent('file', file_get_contents(PATH_TO_FILE));
+			</pre>
+			<p>
+			<strong>Note</strong> : Elasticsearch uses <a href="http://tika.apache.org/">Apache Tika</a> to extract information of documents. You can find a list of supported format here: <a href="http://tika.apache.org/1.4/formats.html">http://tika.apache.org/1.4/formats.html</a>
+			</p>
+	<h3>View</h3>
+		<p>
+		When a search is made, the component sends the request to Elasticsearch and gets results. However, it does not know how to display them. For each result it will trigger an event and concerned plugin will render HTML. It is transparent to the developer. The only thing to do with your plugin is to create the HTML code. You need to create a file default.php in repertory view/plg_[name_of_your_type]/ and you will define which fields you want to display and the way you want to show it.
+		</p>
+		<p>
+		Some variables are defined in view:
+		<ul>
+            <li> <strong>$this->data:</strong> contains the elasticsearch result. It is an array of fields. </li>
+            <li> <strong>$this->highlight : </strong> contains an array of fields with highlight </li>
+            <li> <strong>$this->type : </strong> contains the value of variable $type </li>
+        </ul>
+		</p>
+		<h4>Highlight</h4>
+			<p>
+			Highlighting is generated by ElasticSearch. Here bellow an example with the article plugin.
+			</p>
+			<pre class="brush: php">
+			 if($this->highlight['introtext']){
+
+			   echo ElasticSearchHelper::truncateHighLight($this->highlight['introtext'],200);
+			}
+			else{
+				   if($this->highlight['fulltext']){
+					  echo ElasticSearchHelper::truncateHighLight($this->highlight['fulltext'],500);
+				   }
+				   else
+				   {
+					  $text=SearchHelper::prepareSearchContent($this->data['introtext'],"");
+					  echo JHtmlString::truncate($text,500,true,false);
+				   }
+			}
+			</pre>
+			<p>
+			If a word is highlighted in “introtext”, it will display the content of the field. If not found, it checks if a word is highlighted in the “fulltext”. We can notice that a specific function is called for highlight: 
+			<strong>ElasticSearchHelper::truncateHighLight</strong>
+			</p>
+			<p>
+			This function truncates text and selects just some words on both sides of highlighted words. Second argument is a limit in number of characters.
+			</p>
+	<h3>Template overriding</h3>
+			<p>
+			This part is more to adapt an existing plugin to a website. Joomla provides a template system to custom display without modify existing code. As we have already seen, each plugin has a view to display. It is possible to override it and change display of a type. To do that, you just need to create a file at:
+			<strong>[base_site]/template/[mytemplate]/html/com_elasticsearch/plg_[ name_of_your_type]/default.php</strong>
+			</p>
+			<p>
+			In this way, when a search will be done, it is this file that will be executed.
+			</p>
+	</section>
     </div>
+
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
@@ -47,7 +477,7 @@
       </footer>
     </div>
 
-    
+        <script type="text/javascript"> SyntaxHighlighter.all() </script>
 
   </body>
 </html>
