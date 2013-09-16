@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="JES : An ElasticSearch extension for Joomla" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>JES</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/crim-ca/jes">View on GitHub</a>
+
+          <h1 id="project_title">JES</h1>
+          <h2 id="project_tagline">An ElasticSearch extension for Joomla</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/crim-ca/jes/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/crim-ca/jes/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="jes---extension-elasticsearch-for-joomla" class="anchor" href="#jes---extension-elasticsearch-for-joomla"><span class="octicon octicon-link"></span></a>JES - Extension ElasticSearch for Joomla!</h1>
+
+<p>16/09/2013<br>
+Jean-Baptite Cayrou<br>
+Adrien Gareau  </p>
+
+<p>An ElasticSearch extension for Joomla</p>
+
+<h2>
+<a name="build-package" class="anchor" href="#build-package"><span class="octicon octicon-link"></span></a>Build package</h2>
+
+<p>It is easier to have separated repertories to develop but a little long to create package install...<br>
+We have created a shell script named "create_package.sh" which compress and prepare a zip install package for Joomla!<br>
+Just execute <code>./create_package.sh</code> and the script will create a release repertory containing install package !</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>In Joomla administration, upload package to install it.
+You also need to activate these plugins:</p>
+
+<p>Content - ElasticSearch<br>
+System - ElasticaLib<br>
+ElasticSearch - Article<br>
+ElasticSearch - Contact<br>
+ElasticSearch - Weblinks   </p>
+
+<h2>
+<a name="setup-envirnoement-to-develop" class="anchor" href="#setup-envirnoement-to-develop"><span class="octicon octicon-link"></span></a>Setup envirnoement to develop</h2>
+
+<p>To develop this extension we advise to create symbolic links to component and plugins.
+Some plugins are not likely to change, so creating symbolic links for them is useless.</p>
+
+<h3>
+<a name="automatic" class="anchor" href="#automatic"><span class="octicon octicon-link"></span></a>Automatic</h3>
+
+<p>** ElasticSearch package musts be installed **</p>
+
+<p><code>./create_symbolic.sh</code> creates all symbolic links you need. Execute it with the path of your Joomla website :<br><code>./create-symbolic.sh /var/www/joomla</code></p>
+
+<p>The script will create symbolic links for com_elasticsearch component (site and admin) and for different
+plugins installed.</p>
+
+<h3>
+<a name="manual" class="anchor" href="#manual"><span class="octicon octicon-link"></span></a>Manual</h3>
+
+<p>We call $REP path where is saved this repository and $SITE, root path of your Joomla! install</p>
+
+<ul>
+<li>Component</li>
+</ul><p><code>ln -s $REP/components/com_elasticsearch $SITE/components/</code>
+<code>ln -s $REP/components/com_elasticsearch/admin $SITE/administrator/components/com_elasticsearch</code></p>
+
+<ul>
+<li>Plugins</li>
+</ul><p><code>ln -s $REP/plugins/elasticsearch $SITE/plugins/</code></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">JES maintained by <a href="https://github.com/crim-ca">crim-ca</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
