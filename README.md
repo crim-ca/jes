@@ -29,6 +29,9 @@ ElasticSearch - Weblinks
 
 ## Setup envirnoement to develop
 
+To develop this extension we advise to create symbolic links to component and plugins.
+Some plugins are not likely to change, so creating symbolic links for them is useless.
+
 ###Automatic
 
 ** ElasticSearch package musts be installed **
@@ -40,22 +43,16 @@ The script will create symbolic links for com_elasticsearch component (site and 
 plugins installed.
 
 
-###Manual:
+###Manual
 
-Just install from admin panel :
-plg_content_elastic.zip
-plg_system_elasticaLib.zip
-lib_elastica.zip
-
-
-We call $SVN path where is saved this repository and $SITE, root path of your Joomla! install
+We call $REP path where is saved this repository and $SITE, root path of your Joomla! install
 
 * Component
 
-`ln -s $SVN/components/com_elasticsearch $SITE/components/`
-`ln -s $SVN/components/com_elasticsearch/admin $SITE/administrator/components/com_elasticsearch`
+`ln -s $REP/components/com_elasticsearch $SITE/components/`
+`ln -s $REP/components/com_elasticsearch/admin $SITE/administrator/components/com_elasticsearch`
 
 * Plugins
 
-`ln -s $SVN/plugins/elasticsearch $SITE/plugins/`
+`ln -s $REP/plugins/elasticsearch $SITE/plugins/`
 
