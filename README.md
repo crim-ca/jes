@@ -1,10 +1,23 @@
 JES - Extension ElasticSearch for Joomla!
 ===
-16/09/2013  
-Jean-Baptite Cayrou  
-Adrien Gareau  
 
-An ElasticSearch extension for Joomla
+An ElasticSearch extension for Joomla  
+**You absolutely need to have an ElasticSearch server if you want to use this extension.**  
+If you need further information about ElasticSearch you can go on their website:  
+http://www.elasticsearch.org/
+
+This extension for Joomla! is a powerful search engine which uses ElasticSearch as indexer.
+
+Here some features it provides:
+
+* Results are ordering by pertinence.
+* Boost on some fields. If a search word is in title it is more pertinent than if it is just in the content.
+* Smart search. Our engine does not search the exact words which have been typed. The search is made by prefix so if you write part of a word it could return the whole word.
+* Internationalization. Search results are in the same langue that current user.
+* Stopword. Common words (the, it, is etc.) are eliminated from the search query.
+* Search words are highlighted in the results. The way highlighting is made can be modified. Indeed you can choose to bold results are use a special html tags.
+* Each type of content has its own display. Different elements can be display depends on type of the result.
+* PDF file can be easily index. You can attach a file to content and make search in that content.
 
 
 ##Build package
@@ -27,7 +40,7 @@ ElasticSearch - Article
 ElasticSearch - Contact   
 ElasticSearch - Weblinks   
 
-## Setup envirnoement to develop
+## Setup environment to develop
 
 To develop this extension we advise to create symbolic links to component and plugins.
 Some plugins are not likely to change, so creating symbolic links for them is useless.
@@ -55,4 +68,8 @@ We call $REP path where is saved this repository and $SITE, root path of your Jo
 * Plugins
 
 `ln -s $REP/plugins/elasticsearch $SITE/plugins/`
+
+###Documentation
+
+Guides for administrators and developers are available here : https://crim-ca.github.com/
 
