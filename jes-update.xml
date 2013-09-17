@@ -2,20 +2,20 @@
 <update>
       <name>JES</name>
       <description>JES extension</description>
-      <element>pck_elasticsearch</element>
+      <element>pkg_elasticsearch</element>
       <type>extension</type>
       <version>1.0.0</version>
  
-      <infourl title="GitHub extension">http://yourdomain.com</infourl>
+      <infourl title="JES extension">https://github.com/crim-ca/jes</infourl>
       <downloads>
-         <downloadurl type="full" format="zip">http://yourdomain.com/files/com_helloworld-1.5.0-final.zip</downloadurl>
+         <downloadurl type="full" format="zip">http://crim-ca.github.io/jes/release/pkg_elasticsearch-1.0.zip</downloadurl>
       </downloads>
       <tags>
-         <tag>some-tag</tag>
+         <tag>elasticsearch</tag>
       </tags>
  
-      <maintainer>HelloWorld Inc.</maintainer>
-      <maintainerurl>http://yourdomain.com</maintainerurl>
+      <maintainer>CRIM</maintainer>
+      <maintainerurl>http://crim.ca</maintainerurl>
       <section>some-section</section>
       <targetplatform name="joomla" version="2.5" />
 </update>
