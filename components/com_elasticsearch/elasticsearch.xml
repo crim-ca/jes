@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="2.5" method="install">
+	<name>ElasticSearch</name>
+	<author>Jean-Baptiste Cayrou and Adrien Gareau</author>
+	<creationDate>July 2013</creationDate>
+	<copyright>Copyright 2013 CRIM - Computer Research Institute of Montreal</copyright>
+	<license>Apache 2.0 ; See LICENSE.txt</license>
+	<authorEmail></authorEmail>
+	<authorUrl></authorUrl>
+	<version>1.0</version>
+	<description>ElasticSearch component</description>
+	<files folder="site">
+		<filename>controller.php</filename>
+		<filename>elasticsearch.php</filename>
+		<filename>index.html</filename>
+		<folder>views</folder>
+		<folder>models</folder>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.com_elasticsearch.ini</language>
+	</languages>
+	<administration>
+		<menu img="components/com_elasticsearch/images/small_es.png">ElasticSearch</menu>
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>elasticsearch.php</filename>
+			<filename>controller.php</filename>
+			<filename>config.xml</filename>
+			<folder>views</folder>
+			<folder>helpers</folder>
+			<folder>images</folder>
+			<folder>models</folder>
+		</files>
+		<languages folder="admin/language">
+			<language tag="en-GB">en-GB/en-GB.com_elasticsearch.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_elasticsearch.sys.ini</language>
+		</languages>
+	</administration>
+</extension>
+
+

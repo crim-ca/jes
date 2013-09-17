@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="library" method="install" version="1.1">
+    <name>Elastica</name>
+    <libraryname>Elastica</libraryname>
+    <author></author>
+    <creationDate></creationDate>
+    <copyright></copyright>
+    <license> </license>
+    <authorEmail></authorEmail>
+    <authorUrl></authorUrl>
+    <version>1.0</version>
+    <description> </description>
+    <files>
+        <folder>Bulk</folder>
+        <folder>Cluster</folder>
+        <folder>Exception</folder>
+        <folder>Facet</folder>
+        <folder>Filter</folder>
+        <folder>Index</folder>
+        <folder>Multi</folder>
+        <folder>Node</folder>
+        <folder>Query</folder>
+        <folder>Transport</folder>
+        <folder>Type</folder>
+        <filename>Bulk.php</filename>
+        <filename>Client.php</filename>
+        <filename>Cluster.php</filename>
+        <filename>Connection.php</filename>
+        <filename>Document.php</filename>
+        <filename>Index.php</filename>
+        <filename>Log.php</filename>
+        <filename>Node.php</filename>
+        <filename>Param.php</filename>
+        <filename>Percolator.php</filename>
+        <filename>Query.php</filename>
+        <filename>Request.php</filename>
+        <filename>Response.php</filename>
+        <filename>Result.php</filename>
+        <filename>ResultSet.php</filename>
+        <filename>Script.php</filename>
+        <filename>ScriptFields.php</filename>
+        <filename>Search.php</filename>
+        <filename>SearchableInterface.php</filename>
+        <filename>Status.php</filename>
+        <filename>Type.php</filename>
+        <filename>Util.php</filename>
+    </files>
+</extension>
