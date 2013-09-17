@@ -60,7 +60,9 @@ fi
 
 cd $TMP_PATH
 cp $ROOT_PATH/pkg_elasticsearch.xml $TMP_PATH
-zip -r $ROOT_PATH/release/pkg_elasticsearch.zip .
+
+version=`sed -n -e 's/.*<version>\(.*\)<\/version>.*/\1/p' $ROOT_PATH/pkg_elasticsearch.xml`
+zip -r $ROOT_PATH/release/pkg_elasticsearch-$version.zip .
 
 echo 
 echo "#########################################################"
