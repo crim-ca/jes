@@ -40,6 +40,15 @@ if [ -h "$REP" ]; then # check if symbolic link exists
     echo "Restore : $REP"
 fi
 
+
+# restore mod_elasticsearch
+REP=$JOOMLA_BASE/modules/mod_elasticsearch
+if [ -h "$REP" ]; then # check if symbolic link exists
+    rm  $REP
+    mv $REP-save $REP
+    echo "Restore : $REP"
+fi
+
 #plugins
 
 

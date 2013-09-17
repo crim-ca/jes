@@ -47,6 +47,13 @@ if [ ! -h "$REP" ]; then # check if symbolic link exists
     echo "Create symbolic link : $REP"
 fi
 
+### mod_elasticsearch
+REP=$JOOMLA_BASE/modules/mod_elasticsearch
+if [ ! -h "$REP" ]; then # check if symbolic link exists
+    mv $REP $REP-save
+    ln -s $JES_PATH/modules/mod_elasticsearch $REP
+    echo "Create symbolic link : $REP"
+fi
 
 ### plugin
 REP=$JOOMLA_BASE/plugins/elasticsearch
