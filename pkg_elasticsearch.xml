@@ -22,4 +22,9 @@
     <file type="library" id="Elastica" >lib_Elastica.zip</file>
 	<file type="module" id="mod_elasticsearch" client="site">mod_elasticsearch.zip</file>
   </files>
+   <!-- UPDATESERVER DEFINITION -->
+	<updateservers>
+		<!-- Note: No spaces or linebreaks allowed between the server tags -->
+    <server type="extension" priority="1" name="Extension Update site">http://crim-ca.github.io/jes/jes-update.xml</server>
+  </updateservers>
 </extension>
