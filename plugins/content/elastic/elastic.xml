@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="content">
+<extension version="3.0" type="plugin" group="content">
 	<name>Content - ElasticSearch</name>
 	<author>Jean-Baptiste Cayrou and Adrien Gareau</author>
 	<creationDate>July 2013</creationDate>
