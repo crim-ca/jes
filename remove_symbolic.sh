@@ -11,8 +11,8 @@ JOOMLA_BASE=$1
 JES_PATH=$PWD
 
 # Check if JOOMLA_BASE IS GOOD
-if [ ! -f "$JOOMLA_BASE/joomla.xml" ]; then
-    echo "ERROR: joomla.xml not found"
+if [ ! -d "$JOOMLA_BASE/libraries/joomla" ]; then
+    echo "ERROR: $JOOMLA_BASE seems not being a joomla website"
     echo "Please check path"
     exit 1
 fi
@@ -34,6 +34,15 @@ if [ -h "$REP" ]; then # check if symbolic link exists
 fi
 
 REP=$JOOMLA_BASE/administrator/components/com_elasticsearch
+if [ -h "$REP" ]; then # check if symbolic link exists
+    rm  $REP
+    mv $REP-save $REP
+    echo "Restore : $REP"
+fi
+
+
+# restore mod_elasticsearch
+REP=$JOOMLA_BASE/modules/mod_elasticsearch
 if [ -h "$REP" ]; then # check if symbolic link exists
     rm  $REP
     mv $REP-save $REP

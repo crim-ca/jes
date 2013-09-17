@@ -19,7 +19,7 @@
 JLoader::register('JHtmlString', JPATH_LIBRARIES.'/joomla/html/html/string.php');
 require_once JPATH_ADMINISTRATOR.'/components/com_search/helpers/search.php';
 // Split categories
-$categories = split(';',$this->data['categories']);
+$categories = explode(';',$this->data['categories']);
 
 
 ?>
