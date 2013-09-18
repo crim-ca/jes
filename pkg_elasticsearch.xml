@@ -2,16 +2,15 @@
 <extension type="package" version="2.5">
   <name>ElasticSearch Package</name>
   <packagename>elasticsearch</packagename>
-  <creationDate>2013-08-22</creationDate>
+  <creationDate>2013-09-18</creationDate>
   <author>Adrien Gareau and Jean Baptiste Cayrou</author>
   <authorEmail></authorEmail>
   <authorUrl>http://crim.ca/</authorUrl>
   <version>1.0</version>
   <license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
   <url></url>
-  <packager></packager>
-  <packagerurl></packagerurl>
-  <update></update>
+  <packager>CRIM - Computer Research Institute of Montreal</packager>
+  <packagerurl>http://crim-ca.github.io/jes</packagerurl>
   <description>ElasticSearch extension for Joomla</description>
   <files folder="packages">
     <file type="component" id="com_elasticsearch">com_elasticsearch.zip</file>
