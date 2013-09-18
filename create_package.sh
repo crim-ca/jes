@@ -48,6 +48,13 @@ do
 	zip -r $TMP_PATH/packages/plg_elasticsearch_$TYPE_NAME.zip ./$TYPE_NAME
 done
 
+
+
+
+# Copy License
+cp $ROOT_PATH/LICENSE $TMP_PATH/
+
+
 # Create zip package
 if [ -d "$ROOT_PATH/release" ]; then
 # Remove old package if exists
