@@ -8,6 +8,8 @@
 **/
 ?>
 <?php
+// No direct access to this file
+defined('_JEXEC') or die('Restricted access');
 
 JLoader::register('JHtmlString', JPATH_LIBRARIES.'/joomla/html/html/string.php');
 
