@@ -40,9 +40,9 @@ ElasticSearch - Article
 ElasticSearch - Contact   
 ElasticSearch - Weblinks   
 
-## Setup environment to develop
+## Setting up of the working environment
 
-To develop this extension we advise to create symbolic links to component and plugins.
+To work on this extension we advise you to create symbolic links to component and plugins.
 Some plugins are not likely to change, so creating symbolic links for them is useless.
 
 ###Automatic
