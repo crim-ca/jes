@@ -3,12 +3,12 @@
 	<name>mod_elasticsearch</name>
 	<author>Adrien GAREAU - Jean-Baptiste CAYROU</author>
 	<creationDate>September 2013</creationDate>
-	<copyright></copyright>
-	<license></license>
-	<authorEmail></authorEmail>
-	<authorUrl></authorUrl>
+	<copyright>Copyright 2013 CRIM - Computer Research Institute of Montreal</copyright>
+    <license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
+	<authorEmail>info-deti@crim.ca</authorEmail>
+	<authorUrl>http://crim-ca.github.io/jes</authorUrl>
 	<version>1.0</version>
-	<description></description>
+	<description>A search bar for elastic search component</description>
 	<files>
 		<filename module="mod_elasticsearch">mod_elasticsearch.php</filename>
 		<folder>tmpl</folder>

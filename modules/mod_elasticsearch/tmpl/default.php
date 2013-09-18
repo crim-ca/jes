@@ -1,9 +1,10 @@
 <?php
 /**
- * @package		Joomla.Site
- * @subpackage	mod_search
- * @copyright	Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
- * @license		GNU General Public License version 2 or later; see LICENSE.txt
+ * @package elasticsearch
+ * @subpackage mod_elasticsearch
+ * @author Jean-Baptiste Cayrou and Adrien Gareau
+ * @copyright Copyright 2013 CRIM - Computer Research Institute of Montreal
+ * @license GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
 // no direct access

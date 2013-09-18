@@ -4,8 +4,9 @@
     <author>Jean-Baptiste Cayrou and Adrien Gareau</author>
     <creationDate>July 2013</creationDate>
     <copyright>Copyright 2013 CRIM - Computer Research Institute of Montreal</copyright>
-    <license>Apache 2.0 ; See LICENSE.txt</license>
-    <authorEmail></authorEmail>
+    <license>GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html</license>
+    <authorEmail>info-deti@crim.ca</authorEmail>
+    <authorUrl>http://crim-ca.github.io/jes</authorUrl>
     <version>1.0.0</version>
     <description>Register Elastica Library</description>
     <files>

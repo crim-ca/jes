@@ -5,11 +5,11 @@
     <author></author>
     <creationDate></creationDate>
     <copyright></copyright>
-    <license> </license>
+    <license>Apache 2.0 ; See LICENSE.txt</license>
     <authorEmail></authorEmail>
     <authorUrl></authorUrl>
     <version>1.0</version>
-    <description> </description>
+    <description>Elatica library for Joomla</description>
     <files>
         <folder>Bulk</folder>
         <folder>Cluster</folder>
