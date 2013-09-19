@@ -13,25 +13,25 @@ Here some features it provides:
 * Results are ordering by pertinence.
 * Boost on some fields. If a search word is in title it is more pertinent than if it is just in the content.
 * Smart search. Our engine does not search the exact words which have been typed. The search is made by prefix so if you write part of a word it could return the whole word.
-* Internationalization. Search results are in the same langue that current user.
+* Internationalization. Search results are in the same language that current user.
 * Stopword. Common words (the, it, is etc.) are eliminated from the search query.
 * Search words are highlighted in the results. The way highlighting is made can be modified. Indeed you can choose to bold results are use a special html tags.
 * Each type of content has its own display. Different elements can be display depends on type of the result.
-* PDF file can be easily index. You can attach a file to content and make search in that content.
+* PDF file can be easily indexed. You can attach a file to content and make search in that content.
 
 
 ##Build package
 
 
-It is easier to have separated repertories to develop but a little long to create package install...  
+It is easier to have separated repertories to develop but it is a little bit too long to create package install...  
 We have created a shell script named "create_package.sh" which compress and prepare a zip install package for Joomla!  
-Just execute `./create_package.sh` and the script will create a release repertory containing install package !
+Just execute `./create_package.sh` and the script will create a release repertory containing the package !
 
 
 
 ##Installation
 
-In Joomla administration, upload package to install it.
+In Joomla administration, upload the package to install it.
 You also need to activate these plugins:
 
 Content - ElasticSearch  
@@ -40,9 +40,9 @@ ElasticSearch - Article
 ElasticSearch - Contact   
 ElasticSearch - Weblinks   
 
-## Setting up of the working environment
+## Setting up the working environment
 
-To work on this extension we advise you to create symbolic links to component and plugins.
+To work on this extension we advise you to create symbolic links for component and plugins.
 Some plugins are not likely to change, so creating symbolic links for them is useless.
 
 ###Automatic
@@ -58,7 +58,7 @@ plugins installed.
 
 ###Manual
 
-We call $REP path where is saved this repository and $SITE, root path of your Joomla! install
+We call $REP path where is saved this repository and $SITE, root path of your Joomla! installation
 
 * Component
 
